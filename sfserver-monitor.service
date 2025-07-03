@@ -1,0 +1,34 @@
+[Unit]
+Description=Satisfactory Server CPU Monitor
+Documentation=man:sfserver-monitor
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=sfserver
+Group=sfserver
+ExecStart=/home/sfserver/sfserver-monitor.sh
+Restart=always
+RestartSec=30
+StandardOutput=journal
+StandardError=journal
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=false
+ReadWritePaths=/var/log
+ReadOnlyPaths=/home/sfserver
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+# Environment
+Environment=HOME=/home/sfserver
+WorkingDirectory=/home/sfserver
+
+[Install]
+WantedBy=multi-user.target
